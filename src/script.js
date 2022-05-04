@@ -1,6 +1,25 @@
+function generateWraper() {
+  const body = document.querySelector('body');
+  body.insertAdjacentHTML(
+    'afterbegin',
+    `
+<div class="wrapper">
+</div>
+`,
+  );
+  const wrapper = document.querySelector('.wrapper');
+  wrapper.insertAdjacentHTML(
+    'afterbegin',
+    `
+    <h1>Virtual Keyboard </h1>
+    <textarea name="" id="textarea" cols="30" rows="10" readonly></textarea>
+`,
+  );
+}
+/// ////////////////////////////////////////////////////////////////////////////////////////////
 function insertKeyboard(tag) {
   const body = document.querySelector(`${tag}`);
-  const keyId=['backspace', 'Delete','lShift','rShift','meta','lAlt','rAlt']
+  const keyId = ['backspace', 'Delete', 'lShift', 'rShift', 'meta', 'lAlt', 'rAlt'];
   const row1Keys = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'];
   const row2Keys = ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'del'];
   const row3Keys = ['Caps Lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'j', 'k', 'l', ';', '\'', 'Enter'];
@@ -31,7 +50,7 @@ function insertKeyboard(tag) {
       row4.insertAdjacentHTML(
         'afterbegin',
         `
-            <div class="key key${row1Keys[13 - i].toLowerCase()}">
+            <div id="${row1Keys[13 - i].toLowerCase()}" class="key key${row1Keys[13 - i].toLowerCase()}">
                 <div  class="ru disableRu"><p>${row1Keys[13 - i]}</p></div>
                 <div class="en "><p>${row1Keys[13 - i]}</p></div>
             </div>
@@ -56,7 +75,7 @@ function insertKeyboard(tag) {
       row3.insertAdjacentHTML(
         'afterbegin',
         `
-            <div class="key key${row2Keys[14 - i].toLowerCase()}">
+            <div id="${row2Keys[14 - i].toLowerCase()}" class="key key${row2Keys[14 - i].toLowerCase()}">
                 <div  class="en "><p>${row2Keys[14 - i]}</p></div>
                 <div class="ru disableRu"><p>2</p></div>
             </div>
@@ -74,14 +93,14 @@ function insertKeyboard(tag) {
       );
     }
   }
-  /// ////3 row
+  /// /3 row
   const row2 = document.querySelector('.row2');
   for (let i = 0; i < 14; i += 1) {
     if (row3Keys[13 - i] !== 'Caps Lock' && row3Keys[13 - i] !== 'Enter') {
       row2.insertAdjacentHTML(
         'afterbegin',
         `
-            <div class="key key${row3Keys[13 - i]}">
+            <div id="${row3Keys[13 - i].toLowerCase()}" class="key key${row3Keys[13 - i]}">
                 <div  class="en "><p>${row3Keys[13 - i]}</p></div>
                 <div class="ru disableRu"><p>2</p></div>
             </div>
@@ -107,12 +126,13 @@ function insertKeyboard(tag) {
       row1.insertAdjacentHTML(
         'afterbegin',
         `
-            <div class="key key${row4Keys[12 - i].toLowerCase()}">
+            <div id="${row4Keys[12 - i].toLowerCase()}" class="key key${row4Keys[12 - i].toLowerCase()}">
                 <div  class="en "><p>${row4Keys[12 - i]}</p></div>
                 <div class="ru disableRu"><p>2</p></div>
             </div>
               `,
       );
+      
     } else {
       row1.insertAdjacentHTML(
         'afterbegin',
@@ -208,4 +228,20 @@ function insertKeyboard(tag) {
   }
 }
 
+function addKeyHandlers(){
+  let keys= document.querySelectorAll(`.key`)
+  for(let i=0;i<=64;i++){
+    keys[i].addEventListener('click',clickHandler)
+  }
+}
+
+function clickHandler(e) {
+  console.log(e.currentTarget.id);
+  const textarea = document.querySelector('#textarea');
+  textarea.value+=e.currentTarget.id
+}
+
+generateWraper();
 insertKeyboard('.wrapper');
+addKeyHandlers()
+
