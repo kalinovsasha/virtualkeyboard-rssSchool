@@ -1,13 +1,14 @@
 function insertKeyboard(tag) {
   const body = document.querySelector(`${tag}`);
+  const keyId=['backspace', 'Delete','lShift','rShift','meta','lAlt','rAlt']
   const row1Keys = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'];
-  const row2Keys = ['TAB', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'del'];
+  const row2Keys = ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'del'];
   const row3Keys = ['Caps Lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'j', 'k', 'l', ';', '\'', 'Enter'];
   const row4Keys = ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '▲', 'Shift'];
   const row5Keys = ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', '◄', '▼', '►', 'Ctrl'];
   //
   body.insertAdjacentHTML(
-    'afterbegin',
+    'beforeend',
     `
 <div class="keyboard">
 </div>
@@ -30,7 +31,7 @@ function insertKeyboard(tag) {
       row4.insertAdjacentHTML(
         'afterbegin',
         `
-            <div class="key">
+            <div class="key key${row1Keys[13 - i].toLowerCase()}">
                 <div  class="ru disableRu"><p>${row1Keys[13 - i]}</p></div>
                 <div class="en "><p>${row1Keys[13 - i]}</p></div>
             </div>
@@ -40,7 +41,7 @@ function insertKeyboard(tag) {
       row4.insertAdjacentHTML(
         'afterbegin',
         `
-              <div class="key longButton">
+              <div class="key key${keyId[0]} longButton">
                   <div  class="en longButton"><p>${row1Keys[13 - i]}</p></div>
                   <div class="ru disableRu longButton "><p>2</p></div>
               </div>
@@ -55,7 +56,7 @@ function insertKeyboard(tag) {
       row3.insertAdjacentHTML(
         'afterbegin',
         `
-            <div class="key">
+            <div class="key key${row2Keys[14 - i].toLowerCase()}">
                 <div  class="en "><p>${row2Keys[14 - i]}</p></div>
                 <div class="ru disableRu"><p>2</p></div>
             </div>
@@ -65,7 +66,7 @@ function insertKeyboard(tag) {
       row3.insertAdjacentHTML(
         'afterbegin',
         `
-              <div class="key longButton">
+              <div class="key key${row2Keys[14 - i].toLowerCase()} longButton">
                   <div  class="en longButton"><p>${row2Keys[14 - i]}</p></div>
                   <div class="ru disableRu longButton "><p>2</p></div>
               </div>
@@ -80,7 +81,7 @@ function insertKeyboard(tag) {
       row2.insertAdjacentHTML(
         'afterbegin',
         `
-            <div class="key">
+            <div class="key key${row3Keys[13 - i]}">
                 <div  class="en "><p>${row3Keys[13 - i]}</p></div>
                 <div class="ru disableRu"><p>2</p></div>
             </div>
@@ -106,7 +107,7 @@ function insertKeyboard(tag) {
       row1.insertAdjacentHTML(
         'afterbegin',
         `
-            <div class="key">
+            <div class="key key${row4Keys[12 - i].toLowerCase()}">
                 <div  class="en "><p>${row4Keys[12 - i]}</p></div>
                 <div class="ru disableRu"><p>2</p></div>
             </div>
@@ -116,7 +117,7 @@ function insertKeyboard(tag) {
       row1.insertAdjacentHTML(
         'afterbegin',
         `
-              <div class="key longButton">
+              <div class="key key${row4Keys[12 - i].toLowerCase()} longButton">
                   <div  class="en longButton"><p>${row4Keys[12 - i]}</p></div>
                   <div class="Ru disableRu longButton "><p>2</p></div>
               </div>
@@ -207,4 +208,4 @@ function insertKeyboard(tag) {
   }
 }
 
-insertKeyboard('body');
+insertKeyboard('.wrapper');
