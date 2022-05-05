@@ -1,13 +1,18 @@
-let keycode;
 const textarea = document.querySelector('#textarea');
+const specialKeys = [];
 document.addEventListener('keydown', (event) => {
-  textarea.value += event.code;
+  if (event.code !== 'Backspace') {
+    textarea.value += event.code;
+  }
+  if (event.code === 'Backspace') {
+    textarea.value = textarea.value.slice(0, textarea.value.length - 1);
+  }
   console.log(event.code);
   try {
-    document.querySelector(`.key${event.key.toLowerCase()}`).classList.add('pushed');
+    document.querySelector(`.${event.code}`).classList.add('pushed');
   } catch (error) {
   }
 });
 document.addEventListener('keyup', (event) => {
-  document.querySelector(`.key${event.key.toLowerCase()}`).classList.remove('pushed');
+  document.querySelector(`.${event.code}`).classList.remove('pushed');
 });

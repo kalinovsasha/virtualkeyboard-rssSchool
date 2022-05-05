@@ -26,7 +26,7 @@
 
 .pushed {
   background-color: #24a724 !important;
-  border-radius: 40% !important;
+  border-radius: 20px !important;
   -webkit-transition: .25s ease-in;
   transition: .25s ease-in;
 }
@@ -129,11 +129,7 @@
   text-align: center;
 }
 
-.key .disableRu {
-  display: none !important;
-}
-
-.key .disableEn {
+.key .disable {
   display: none !important;
 }
 
@@ -147,7 +143,7 @@
   width: 80px !important;
 }
 
-.space {
+.Space {
   width: 385px !important;
   height: 40px;
 }

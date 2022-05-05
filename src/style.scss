@@ -15,7 +15,7 @@
 }
 .pushed{
     background-color: rgb(36, 167, 36) !important;
-    border-radius: 40% !important;
+    border-radius: 20px !important;
     transition: .25s ease-in;
 }
 .keyboard{
@@ -77,10 +77,7 @@
         left:0;
         text-align: center;
       }
-      .disableRu{
-        display: none !important;
-      }
-      .disableEn{
+      .disable{
         display: none !important;
       }
       &:hover{
@@ -91,7 +88,7 @@
 .longButton{
     width: 80px !important;
 }
-.space{
+.Space{
     width: 385px !important;
     height: 40px
 }
