@@ -1,4 +1,4 @@
-let capsLockStatus = false;
+let capsLockStatus = localStorage.getItem('capsLockStatus');
 const shiftStatus = false;
 /// ///////////////////////////////////////////////////////////////////////////////////////////////
 function generateWraper() {
@@ -401,10 +401,18 @@ function clickHandler(e) {
     textarea.value += e.currentTarget.innerText;
   }
 }
+function getCapsLockStatus() {
+  if (capsLockStatus == 'true') {
+    document.querySelector('.CapsLock').classList.add('pushed');
+  } else {
+    document.querySelector('.CapsLock').classList.remove('pushed');
+  }
+}
 
 generateWraper();
 insertKeyboard('.wrapper');
 addKeyHandlers();
+getCapsLockStatus();
 
 const textarea = document.querySelector('#textarea');
 document.addEventListener('keydown', (event) => {
@@ -415,12 +423,15 @@ document.addEventListener('keydown', (event) => {
     textarea.value = textarea.value.slice(0, textarea.value.length - 1);
   }
   if (event.code === 'CapsLock') {
-    if (capsLockStatus == false) {
+    if (capsLockStatus !== 'true') {
+      localStorage.setItem('capsLockStatus', 'true');
+      capsLockStatus = 'true';
       document.querySelector(`.${event.code}`).classList.add('pushed');
     } else {
       document.querySelector(`.${event.code}`).classList.remove('pushed');
+      capsLockStatus = 'false';
+      localStorage.setItem('capsLockStatus', 'false');
     }
-    capsLockStatus = capsLockStatus == false;
   }
   console.log(event.code);
   try {
