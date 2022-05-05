@@ -14,9 +14,9 @@
     margin-bottom: 20px;
 }
 .pushed{
-    background-color: rgb(36, 167, 36) !important;
+    background-color: rgb(61, 99, 221) !important;
     border-radius: 20px !important;
-    transition: .25s ease-in;
+    transition: .15s ease-in;
 }
 .keyboard{
     width: 780px;
@@ -81,7 +81,7 @@
         display: none !important;
       }
       &:hover{
-          background-color: rgb(126, 248, 126);
+          background-color: rgb(126, 155, 248);
           transition: 0.25s ease-out;
       }
 }

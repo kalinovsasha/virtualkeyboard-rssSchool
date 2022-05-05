@@ -25,10 +25,10 @@
 }
 
 .pushed {
-  background-color: #24a724 !important;
+  background-color: #3d63dd !important;
   border-radius: 20px !important;
-  -webkit-transition: .25s ease-in;
-  transition: .25s ease-in;
+  -webkit-transition: .15s ease-in;
+  transition: .15s ease-in;
 }
 
 .keyboard {
@@ -133,7 +133,7 @@
 }
 
 .key:hover {
-  background-color: #7ef87e;
+  background-color: #7e9bf8;
   -webkit-transition: 0.25s ease-out;
   transition: 0.25s ease-out;
 }

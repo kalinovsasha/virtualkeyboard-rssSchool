@@ -389,7 +389,8 @@ function insertKeyboard(tag) {
 function addKeyHandlers() {
   const keys = document.querySelectorAll('.key');
   for (let i = 0; i <= 64; i++) {
-    keys[i].addEventListener('click', clickHandler);
+    keys[i].addEventListener('mousedown', clickHandler);
+    keys[i].addEventListener('mouseup', clickHandlerUp);
   }
 }
 
@@ -399,7 +400,11 @@ function clickHandler(e) {
   const textarea = document.querySelector('#textarea');
   if (!exclude.includes(e.currentTarget.innerText)) {
     textarea.value += e.currentTarget.innerText;
+    e.currentTarget.classList.add('pushed')
   }
+}
+function clickHandlerUp(e){
+  e.currentTarget.classList.remove('pushed');
 }
 function getCapsLockStatus() {
   if (capsLockStatus == 'true') {
