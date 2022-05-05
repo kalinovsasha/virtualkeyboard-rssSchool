@@ -76,11 +76,6 @@
   background-color: #444444;
 }
 
-.key p {
-  color: white;
-  font-weight: 700;
-}
-
 .key .en {
   position: absolute;
   display: -webkit-box;
@@ -103,6 +98,8 @@
   top: 0;
   left: 0;
   text-align: center;
+  color: white;
+  font-weight: 700;
 }
 
 .key .ru {
@@ -127,6 +124,8 @@
   top: 0;
   left: 0;
   text-align: center;
+  color: white;
+  font-weight: 700;
 }
 
 .key .disable {
