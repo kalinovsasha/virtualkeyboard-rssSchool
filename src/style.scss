@@ -44,7 +44,7 @@
     height: 40px;
     border-radius: 8px;
     background-color: #444444;
-    .en{
+    .en, .enCaps{
         position: absolute;
         display: flex;
         flex-direction: column;
@@ -61,7 +61,7 @@
         font-weight: 700;
         
     }
-    .ru{
+    .ru, .ruCaps{
         position: absolute;
         display: flex;
         flex-direction: column;

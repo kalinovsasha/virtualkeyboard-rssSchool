@@ -76,7 +76,7 @@
   background-color: #444444;
 }
 
-.key .en {
+.key .en, .key .enCaps {
   position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -102,7 +102,7 @@
   font-weight: 700;
 }
 
-.key .ru {
+.key .ru, .key .ruCaps {
   position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
