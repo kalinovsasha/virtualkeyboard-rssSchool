@@ -1,5 +1,5 @@
 let capsLockStatus = localStorage.getItem('capsLockStatus');
-const shiftStatus = false;
+let lang=localStorage.getItem('lang');
 /// ///////////////////////////////////////////////////////////////////////////////////////////////
 function generateWraper() {
   const body = document.querySelector('body');
@@ -72,6 +72,7 @@ function insertKeyboard(tag) {
         `
               <div class="key ${keyId[1]} longButton">
                   <div  class="en  longButton">${row1Keys[13 - i]}</div>
+                  <div  class="ru  longButton">${row1Keys[13 - i]}</div>
               </div>
                 `,
       );
@@ -82,6 +83,7 @@ function insertKeyboard(tag) {
         `
               <div class="key ${keyId[0]} ">
                   <div  class="en  ">${row1Keys[13 - i]}</div>
+                  <div  class="ru  disable ">${row1Keys[13 - i]}</div>
               </div>
                 `,
       );
@@ -110,7 +112,7 @@ function insertKeyboard(tag) {
         `
               <div class="key ${keyId[8]} longButton">
                   <div  class="en longButton">${row2Keys[14 - i]}</div>
-                  <div class="ru disable longButton ">2</div>
+                  <div class="ru disable longButton ">${row2Keys[14 - i]}</div>
               </div>
                 `,
       );
@@ -121,7 +123,7 @@ function insertKeyboard(tag) {
         `
               <div class="key ${digits[15 - i]} ">
                   <div  class="en ">${row2Keys[14 - i]}</div>
-                  <div class="ru disable  ">2</div>
+                  <div class="ru disable  ">${row2Keys[14 - i]}</div>
               </div>
                 `,
       );
@@ -132,7 +134,7 @@ function insertKeyboard(tag) {
         `
               <div class="key ${keyId[2]} ">
                   <div  class="en ">${row2Keys[14 - i]}</div>
-                  <div class="ru disable  ">2</div>
+                  <div class="ru disable  ">${row2Keys[14 - i]}</div>
               </div>
                 `,
       );
@@ -147,8 +149,8 @@ function insertKeyboard(tag) {
         `
             <div id="${row3Keys[13 - i].toLowerCase()}" class="key Key${row3Keys[13 - i].toUpperCase()}">
                 <div  class="en ">${row3Keys[13 - i]}</div>
-                <div class="enCaps disable">2</div>
-                <div class="ru disable">2</div>
+                <div class="enCaps disable"></div>
+                <div class="ru disable">${row3KeysRu[13 - i]}</div>
                 <div class="ruCaps disable">2</div>
             </div>
               `,
@@ -159,7 +161,7 @@ function insertKeyboard(tag) {
         `
               <div class="key longButton CapsLock">
                   <div  class="en longButton">${row3Keys[13 - i]}</div>
-                  <div class="ru disable longButton ">2</div>
+                  <div class="ru disable longButton ">${row3Keys[13 - i]}</div>
               </div>
                 `,
       );
@@ -170,7 +172,7 @@ function insertKeyboard(tag) {
         `
               <div class="key  Semicolon">
                   <div  class="en ">${row3Keys[13 - i]}</div>
-                  <div class="ru disable  ">2</div>
+                  <div class="ru disable  ">${row3Keys[13 - i]}</div>
               </div>
                 `,
       );
@@ -181,7 +183,7 @@ function insertKeyboard(tag) {
         `
               <div class="key  Quote">
                   <div  class="en ">${row3Keys[13 - i]}</div>
-                  <div class="ru disable  ">2</div>
+                  <div class="ru disable  ">${row3Keys[13 - i]}</div>
               </div>
                 `,
       );
@@ -192,7 +194,7 @@ function insertKeyboard(tag) {
         `
               <div class="key longButton Enter">
                   <div  class="en longButton">${row3Keys[13 - i]}</div>
-                  <div class="ru disable longButton ">2</div>
+                  <div class="ru disable longButton ">${row3Keys[13 - i]}</div>
               </div>
                 `,
       );
@@ -209,7 +211,7 @@ function insertKeyboard(tag) {
             <div id="${row4Keys[12 - i].toLowerCase()}" class="key Key${row4Keys[12 - i].toUpperCase()}">
                 <div  class="en ">${row4Keys[12 - i]}</div>
                 <div class="enCaps disable">2</div>
-                <div class="ru disable">2</div>
+                <div class="ru disable">${row4KeysRu[12 - i]}</div>
                 <div class="ruCaps disable">2</div>
             </div>
               `,
@@ -221,7 +223,7 @@ function insertKeyboard(tag) {
         `
               <div class="key ShiftLeft longButton">
                   <div  class="en longButton">${row4Keys[12 - i]}</div>
-                  <div class="Ru disable longButton ">2</div>
+                  <div class="ru disable longButton ">${row4Keys[12 - i]}</div>
               </div>
                 `,
       );
@@ -232,7 +234,7 @@ function insertKeyboard(tag) {
         `
               <div class="key ShiftRight longButton">
                   <div  class="en longButton">${row4Keys[12 - i]}</div>
-                  <div class="Ru disable longButton ">2</div>
+                  <div class="ru disable longButton ">${row4Keys[12 - i]}</div>
               </div>
                 `,
       );
@@ -244,7 +246,7 @@ function insertKeyboard(tag) {
         `
               <div class="key ArrowUp ">
                   <div  class="en ">${row4Keys[12 - i]}</div>
-                  <div class="Ru disable  ">2</div>
+                  <div class="ru disable  ">${row4Keys[12 - i]}</div>
               </div>
                 `,
       );
@@ -255,7 +257,7 @@ function insertKeyboard(tag) {
         `
               <div class="key Slash ">
                   <div  class="en ">${row4Keys[12 - i]}</div>
-                  <div class="Ru disable  ">2</div>
+                  <div class="ru disable  ">${row4Keys[12 - i]}</div>
               </div>
                 `,
       );
@@ -266,7 +268,7 @@ function insertKeyboard(tag) {
         `
               <div class="key Period ">
                   <div  class="en ">${row4Keys[12 - i]}</div>
-                  <div class="Ru disable  ">2</div>
+                  <div class="ru disable  ">${row4Keys[12 - i]}</div>
               </div>
                 `,
       );
@@ -277,7 +279,7 @@ function insertKeyboard(tag) {
         `
               <div class="key Comma ">
                   <div  class="en ">${row4Keys[12 - i]}</div>
-                  <div class="Ru disable  ">2</div>
+                  <div class="ru disable  ">${row4Keys[12 - i]}</div>
               </div>
                 `,
       );
@@ -396,14 +398,13 @@ function addKeyHandlers() {
 
 function clickHandler(e) {
   const exclude = ['Shift', 'Caps Lock', 'Ctrl', 'del', 'Tab', 'Alt', 'Backspace', 'Win', 'Enter'];
-  console.log(e.currentTarget.innerText);
   const textarea = document.querySelector('#textarea');
   if (!exclude.includes(e.currentTarget.innerText)) {
     textarea.value += e.currentTarget.innerText;
-    e.currentTarget.classList.add('pushed')
+    e.currentTarget.classList.add('pushed');
   }
 }
-function clickHandlerUp(e){
+function clickHandlerUp(e) {
   e.currentTarget.classList.remove('pushed');
 }
 function getCapsLockStatus() {
@@ -421,6 +422,26 @@ getCapsLockStatus();
 
 const textarea = document.querySelector('#textarea');
 document.addEventListener('keydown', (event) => {
+/////////////Change LAnguage
+  if (event.shiftKey && event.altKey) {
+    let ru = document.querySelectorAll('.ru')
+    let en= document.querySelectorAll('.en')
+    lang=(lang!='Ru')?"Ru":"En";
+    localStorage.setItem('lang',lang);
+		textarea.value +=(localStorage.getItem('lang'));
+    if(lang!="En"){
+      console.log( document.querySelector('.en'))
+      for(i in ru){
+        ru[i].classList.remove('disable');
+        en[i].classList.add('disable');
+      }
+    }else{
+      for(i in en){
+        en[i].classList.remove('disable');
+        ru[i].classList.add('disable');
+      }
+    }
+	}
   if (event.code !== 'Backspace' && event.code !== 'CapsLock') {
     textarea.value += document.querySelector(`.${event.code}`).innerText;
   }
@@ -438,7 +459,6 @@ document.addEventListener('keydown', (event) => {
       localStorage.setItem('capsLockStatus', 'false');
     }
   }
-  console.log(event.code);
   try {
     if (event.code !== 'CapsLock') {
       document.querySelector(`.${event.code}`).classList.add('pushed');
@@ -451,3 +471,4 @@ document.addEventListener('keyup', (event) => {
     document.querySelector(`.${event.code}`).classList.remove('pushed');
   }
 });
+
