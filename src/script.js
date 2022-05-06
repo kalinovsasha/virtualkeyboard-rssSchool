@@ -1,6 +1,12 @@
 let capsLockStatus = localStorage.getItem('capsLockStatus');
 let lang = localStorage.getItem('lang');
-/// ///////////////////////////////////////////////////////////////////////////////////////////////
+
+window.onkeydown = (evt) => {
+  if (evt.key == 'Tab') {
+    evt.preventDefault();
+  }
+};
+
 function generateWraper() {
   const body = document.querySelector('body');
   body.insertAdjacentHTML(
@@ -15,7 +21,7 @@ function generateWraper() {
     'afterbegin',
     `
     <h1>Virtual Keyboard </h1>
-    <textarea name="" id="textarea" cols="30" rows="10" readonly></textarea>
+    <textarea name="" id="textarea" cols="30" rows="10" ></textarea>
 `,
   );
 }
@@ -158,7 +164,7 @@ function insertKeyboard(tag) {
       row2.insertAdjacentHTML(
         'afterbegin',
         `
-            <div id="${row3Keys[13 - i].toLowerCase()}" class="key Key${row3Keys[13 - i].toUpperCase()}">
+            <div  class="key Key${row3Keys[13 - i].toUpperCase()}">
                 <div  class="en ">${row3Keys[13 - i]}</div>
                 <div class="enCaps disable">${row3Keys[13 - i].toUpperCase()}</div>
                 <div class="ru disable">${row3KeysRu[13 - i]}</div>
@@ -231,7 +237,7 @@ function insertKeyboard(tag) {
                 <div  class="en ">${row4Keys[12 - i]}</div>
                 <div class="enCaps disable">${row4Keys[12 - i].toUpperCase()}</div>
                 <div class="ru disable">${row4KeysRu[12 - i]}</div>
-                <div class="ruCaps disable">2</div>
+                <div class="ruCaps disable">${row4KeysRu[12 - i].toUpperCase()}</div>
             </div>
               `,
       );
@@ -435,14 +441,6 @@ function insertKeyboard(tag) {
   }
 }
 
-function addKeyHandlers() {
-  const keys = document.querySelectorAll('.key');
-  for (let i = 0; i <= 64; i++) {
-    keys[i].addEventListener('mousedown', clickHandler);
-    keys[i].addEventListener('mouseup', clickHandlerUp);
-  }
-}
-
 function clickHandler(e) {
   const exclude = ['Shift', 'Caps Lock', 'Ctrl', 'del', 'Tab', 'Alt', 'Backspace', 'Win', 'Enter'];
   const textarea = document.querySelector('#textarea');
@@ -455,10 +453,51 @@ function clickHandlerUp(e) {
   e.currentTarget.classList.remove('pushed');
 }
 function getCapsLockStatus() {
+  const ru = document.querySelectorAll('.ru');
+  const en = document.querySelectorAll('.en');
+  const ruCaps = document.querySelectorAll('.ruCaps');
+  const enCaps = document.querySelectorAll('.enCaps');
   if (capsLockStatus == 'true') {
+    if (lang == 'en') {
+      for (let i = 0; i < 64; i++) {
+        en[i].classList.add('disable');
+        enCaps[i].classList.remove('disable');
+        ru[i].classList.add('disable');
+        ruCaps[i].classList.add('disable');
+      }
+    }
+    if (lang == 'ru') {
+      for (let i = 0; i < 64; i++) {
+        ru[i].classList.add('disable');
+        en[i].classList.add('disable');
+        enCaps[i].classList.add('disable');
+        ruCaps[i].classList.remove('disable');
+      }
+    }
     document.querySelector('.CapsLock').classList.add('pushed');
   } else {
+    if (lang == 'en') {
+      for (let i = 0; i < 64; i++) {
+        ru[i].classList.add('disable');
+        en[i].classList.remove('disable');
+        enCaps[i].classList.add('disable');
+      }
+    }
+    if (lang == 'ru') {
+      for (let i = 0; i < 64; i++) {
+        en[i].classList.add('disable');
+        ru[i].classList.remove('disable');
+        ruCaps[i].classList.add('disable');
+      }
+    }
     document.querySelector('.CapsLock').classList.remove('pushed');
+  }
+}
+function addKeyHandlers() {
+  const keys = document.querySelectorAll('.key');
+  for (let i = 0; i <= 64; i++) {
+    keys[i].addEventListener('mousedown', clickHandler);
+    keys[i].addEventListener('mouseup', clickHandlerUp);
   }
 }
 
@@ -468,33 +507,61 @@ addKeyHandlers();
 getCapsLockStatus();
 
 const textarea = document.querySelector('#textarea');
+// Textarea Js only
+textarea.addEventListener('keydown', (event) => {
+  event.preventDefault();
+});
+// Key handler
 document.addEventListener('keydown', (event) => {
+  const arr = ['Delete', 'Backspace', 'CapsLock', 'AltLeft', 'AltRight', 'MetaLeft', 'ControlLeft', 'ControlRight', 'ShiftLeft', 'ShiftRight', 'Tab', 'Enter'];
   const ru = document.querySelectorAll('.ru');
   const en = document.querySelectorAll('.en');
   const ruCaps = document.querySelectorAll('.ruCaps');
   const enCaps = document.querySelectorAll('.enCaps');
-  /// //////////Change LAnguage
+  /// ///////Change Language
   if (event.shiftKey && event.altKey) {
-    lang = (lang != 'Ru') ? 'Ru' : 'En';
+    lang = (lang != 'ru') ? 'ru' : 'en';
     localStorage.setItem('lang', lang);
-    textarea.value += (localStorage.getItem('lang'));
-    if (lang != 'En') {
-      console.log(document.querySelector('.en'));
-      for (i in ru) {
-        ru[i].classList.remove('disable');
-        en[i].classList.add('disable');
+    if (lang != 'en') {
+      for (let i = 0; i < 64; i += 1) {
+        if (localStorage.getItem('capsLockStatus') == 'false') {
+          ru[i].classList.remove('disable');
+          ruCaps[i].classList.add('disable');
+          en[i].classList.add('disable');
+          enCaps[i].classList.add('disable');
+        } else {
+          ru[i].classList.add('disable');
+          ruCaps[i].classList.remove('disable');
+          en[i].classList.add('disable');
+          enCaps[i].classList.add('disable');
+        }
       }
     } else {
-      for (i in en) {
-        en[i].classList.remove('disable');
-        ru[i].classList.add('disable');
+      for (let i = 0; i < 64; i += 1) {
+        if (localStorage.getItem('capsLockStatus') == 'false') {
+          en[i].classList.remove('disable');
+          enCaps[i].classList.add('disable');
+          ru[i].classList.add('disable');
+          ruCaps[i].classList.add('disable');
+        } else {
+          en[i].classList.add('disable');
+          enCaps[i].classList.remove('disable');
+          ru[i].classList.add('disable');
+          ruCaps[i].classList.add('disable');
+        }
       }
     }
   }
-  if (event.code !== 'Backspace' && event.code !== 'CapsLock') {
+  if (!arr.includes(event.code)) {
     textarea.value += document.querySelector(`.${event.code}`).innerText;
   }
-  if (event.code === 'Backspace') {
+  if (event.code === 'Enter') {
+    textarea.value += '\n';
+  }
+  if (event.code === 'Tab') {
+    textarea.value += '    ';
+  }
+  if (event.code === 'Backspace' || event.code === 'Delete') {
     textarea.value = textarea.value.slice(0, textarea.value.length - 1);
   }
   /// //////////CapsLock
@@ -502,16 +569,31 @@ document.addEventListener('keydown', (event) => {
     if (capsLockStatus !== 'true') {
       localStorage.setItem('capsLockStatus', 'true');
       capsLockStatus = 'true';
-      console.log(enCaps);
-      for (let i = 0; i < 64; i++) {
-        en[i].classList.add('disable');
-        enCaps[i].classList.remove('disable');
+      if (lang == 'en') {
+        for (let i = 0; i < 64; i++) {
+          en[i].classList.add('disable');
+          enCaps[i].classList.remove('disable');
+        }
+      }
+      if (lang == 'ru') {
+        for (let i = 0; i < 64; i++) {
+          ru[i].classList.add('disable');
+          ruCaps[i].classList.remove('disable');
+        }
       }
       document.querySelector(`.${event.code}`).classList.add('pushed');
     } else {
-      for (let i = 0; i < 64; i++) {
-        en[i].classList.remove('disable');
-        enCaps[i].classList.add('disable');
+      if (lang == 'en') {
+        for (let i = 0; i < 64; i++) {
+          en[i].classList.remove('disable');
+          enCaps[i].classList.add('disable');
+        }
+      }
+      if (lang == 'ru') {
+        for (let i = 0; i < 64; i++) {
+          ru[i].classList.remove('disable');
+          ruCaps[i].classList.add('disable');
+        }
       }
       document.querySelector(`.${event.code}`).classList.remove('pushed');
       capsLockStatus = 'false';
@@ -523,6 +605,7 @@ document.addEventListener('keydown', (event) => {
       document.querySelector(`.${event.code}`).classList.add('pushed');
     }
   } catch (error) {
+
   }
 });
 document.addEventListener('keyup', (event) => {
