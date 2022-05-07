@@ -1,11 +1,75 @@
+function deleteKey(textarea) {
+  const pos = textarea.selectionEnd;
+  textarea.value = textarea.value.slice(0, textarea.selectionEnd)
+    + textarea.value.slice(textarea.selectionEnd + 1);
+  textarea.selectionEnd = pos;
+}
+
+function backspaceKey(textarea) {
+  const pos = textarea.selectionEnd;
+  if (textarea.selectionEnd - 1 > 0) {
+    textarea.value = textarea.value.slice(0, textarea.selectionEnd - 1)
+    + textarea.value.slice(textarea.selectionEnd);
+  } else {
+    textarea.value = textarea.value.slice(1);
+  }
+
+  textarea.selectionEnd = pos > 0 ? pos - 1 : pos;
+}
+function insertText(textarea, text) {
+  const cursorPos = textarea.selectionEnd;
+  textarea.value = textarea.value.slice(0, textarea.selectionEnd)
+  + text + textarea.value.slice(textarea.selectionEnd);
+  textarea.selectionEnd = cursorPos + text.length;
+}
 let capsLockStatus = localStorage.getItem('capsLockStatus');
 let lang = localStorage.getItem('lang');
 
 window.onkeydown = (evt) => {
-  if (evt.key == 'Tab') {
+  if (evt.key === 'Tab') {
     evt.preventDefault();
   }
 };
+
+function capsLockHandler() {
+  const ru = document.querySelectorAll('.ru');
+  const en = document.querySelectorAll('.en');
+  const ruCaps = document.querySelectorAll('.ruCaps');
+  const enCaps = document.querySelectorAll('.enCaps');
+  if (capsLockStatus !== 'true') {
+    localStorage.setItem('capsLockStatus', 'true');
+    capsLockStatus = 'true';
+    if (lang === 'en') {
+      for (let i = 0; i < 64; i += 1) {
+        en[i].classList.add('disable');
+        enCaps[i].classList.remove('disable');
+      }
+    }
+    if (lang === 'ru') {
+      for (let i = 0; i < 64; i += 1) {
+        ru[i].classList.add('disable');
+        ruCaps[i].classList.remove('disable');
+      }
+    }
+    document.querySelector('.CapsLock').classList.add('pushed');
+  } else {
+    if (lang === 'en') {
+      for (let i = 0; i < 64; i += 1) {
+        en[i].classList.remove('disable');
+        enCaps[i].classList.add('disable');
+      }
+    }
+    if (lang === 'ru') {
+      for (let i = 0; i < 64; i += 1) {
+        ru[i].classList.remove('disable');
+        ruCaps[i].classList.add('disable');
+      }
+    }
+    document.querySelector('.CapsLock').classList.remove('pushed');
+    capsLockStatus = 'false';
+    localStorage.setItem('capsLockStatus', 'false');
+  }
+}
 
 function generateWraper() {
   const body = document.querySelector('body');
@@ -31,6 +95,8 @@ function insertKeyboard(tag) {
   const keyId = ['Backquote', 'Backspace', 'Delete', 'ShiftLeft', 'ShiftRight', 'MetaLeft', 'AltLeft', 'AltRight', 'Tab'];
   const digits = ['Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'BracketLeft', 'BracketRight', 'Backslash'];
   const row1Keys = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'];
+  const row1KeysShift = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace'];
+  const row1KeysShiftRu = ['Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace'];
   const row2Keys = ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'del'];
   const row2KeysRu = ['Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'del'];
   const row3Keys = ['Caps Lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'j', 'k', 'l', ';', '\'', 'Enter'];
@@ -59,7 +125,7 @@ function insertKeyboard(tag) {
   /// 1 row
   const row4 = document.querySelector('.row4');
   for (let i = 0; i < 14; i += 1) {
-    if (row1Keys[13 - i] !== 'Backspace' && i != 13) {
+    if (row1Keys[13 - i] !== 'Backspace' && i !== 13) {
       row4.insertAdjacentHTML(
         'afterbegin',
         `
@@ -72,7 +138,7 @@ function insertKeyboard(tag) {
               `,
       );
     }
-    if (row1Keys[13 - i] == 'Backspace') {
+    if (row1Keys[13 - i] === 'Backspace') {
       row4.insertAdjacentHTML(
         'afterbegin',
         `
@@ -85,7 +151,7 @@ function insertKeyboard(tag) {
                 `,
       );
     }
-    if (i == 13) {
+    if (i === 13) {
       row4.insertAdjacentHTML(
         'afterbegin',
         `
@@ -102,7 +168,7 @@ function insertKeyboard(tag) {
   /// ////2 row
   const row3 = document.querySelector('.row3');
   for (let i = 0; i < 15; i += 1) {
-    if (i > 3 && i != 14) {
+    if (i > 3 && i !== 14) {
       row3.insertAdjacentHTML(
         'afterbegin',
         `
@@ -116,7 +182,7 @@ function insertKeyboard(tag) {
               `,
       );
     }
-    if (i == 14) {
+    if (i === 14) {
       row3.insertAdjacentHTML(
         'afterbegin',
         `
@@ -143,7 +209,7 @@ function insertKeyboard(tag) {
                 `,
       );
     }
-    if (i == 0) {
+    if (i === 0) {
       row3.insertAdjacentHTML(
         'afterbegin',
         `
@@ -160,7 +226,7 @@ function insertKeyboard(tag) {
   /// /3 row
   const row2 = document.querySelector('.row2');
   for (let i = 0; i < 14; i += 1) {
-    if (row3Keys[13 - i] !== 'Caps Lock' && row3Keys[13 - i] !== 'Enter' && i != 1 && i != 2) {
+    if (row3Keys[13 - i] !== 'Caps Lock' && row3Keys[13 - i] !== 'Enter' && i !== 1 && i !== 2) {
       row2.insertAdjacentHTML(
         'afterbegin',
         `
@@ -172,7 +238,7 @@ function insertKeyboard(tag) {
             </div>
               `,
       );
-    } if (i == 13) {
+    } if (i === 13) {
       row2.insertAdjacentHTML(
         'afterbegin',
         `
@@ -185,7 +251,7 @@ function insertKeyboard(tag) {
                 `,
       );
     }
-    if (i == 2) {
+    if (i === 2) {
       row2.insertAdjacentHTML(
         'afterbegin',
         `
@@ -198,7 +264,7 @@ function insertKeyboard(tag) {
                 `,
       );
     }
-    if (i == 1) {
+    if (i === 1) {
       row2.insertAdjacentHTML(
         'afterbegin',
         `
@@ -211,7 +277,7 @@ function insertKeyboard(tag) {
                 `,
       );
     }
-    if (i == 0) {
+    if (i === 0) {
       row2.insertAdjacentHTML(
         'afterbegin',
         `
@@ -242,7 +308,7 @@ function insertKeyboard(tag) {
               `,
       );
     }
-    if (i == 12) {
+    if (i === 12) {
       row1.insertAdjacentHTML(
         'afterbegin',
         `
@@ -255,7 +321,7 @@ function insertKeyboard(tag) {
                 `,
       );
     }
-    if (i == 0) {
+    if (i === 0) {
       row1.insertAdjacentHTML(
         'afterbegin',
         `
@@ -269,7 +335,7 @@ function insertKeyboard(tag) {
       );
     }
 
-    if (i == 1) {
+    if (i === 1) {
       row1.insertAdjacentHTML(
         'afterbegin',
         `
@@ -282,7 +348,7 @@ function insertKeyboard(tag) {
                 `,
       );
     }
-    if (i == 2) {
+    if (i === 2) {
       row1.insertAdjacentHTML(
         'afterbegin',
         `
@@ -295,7 +361,7 @@ function insertKeyboard(tag) {
                 `,
       );
     }
-    if (i == 3) {
+    if (i === 3) {
       row1.insertAdjacentHTML(
         'afterbegin',
         `
@@ -308,7 +374,7 @@ function insertKeyboard(tag) {
                 `,
       );
     }
-    if (i == 4) {
+    if (i === 4) {
       row1.insertAdjacentHTML(
         'afterbegin',
         `
@@ -325,7 +391,7 @@ function insertKeyboard(tag) {
   /// ////5 row
   const row0 = document.querySelector('.row0');
   for (let i = 0; i < 9; i += 1) {
-    if (i == 8) {
+    if (i === 8) {
       row0.insertAdjacentHTML(
         'afterbegin',
         `
@@ -338,7 +404,7 @@ function insertKeyboard(tag) {
                   `,
       );
     }
-    if (i == 7) {
+    if (i === 7) {
       row0.insertAdjacentHTML(
         'afterbegin',
         `
@@ -351,7 +417,7 @@ function insertKeyboard(tag) {
                   `,
       );
     }
-    if (i == 6) {
+    if (i === 6) {
       row0.insertAdjacentHTML(
         'afterbegin',
         `
@@ -364,7 +430,7 @@ function insertKeyboard(tag) {
                   `,
       );
     }
-    if (i == 5) {
+    if (i === 5) {
       row0.insertAdjacentHTML(
         'afterbegin',
         `
@@ -373,7 +439,7 @@ function insertKeyboard(tag) {
                   `,
       );
     }
-    if (i == 4) {
+    if (i === 4) {
       row0.insertAdjacentHTML(
         'afterbegin',
         `
@@ -386,7 +452,7 @@ function insertKeyboard(tag) {
                   `,
       );
     }
-    if (i == 3) {
+    if (i === 3) {
       row0.insertAdjacentHTML(
         'afterbegin',
         `
@@ -399,7 +465,7 @@ function insertKeyboard(tag) {
                   `,
       );
     }
-    if (i == 2) {
+    if (i === 2) {
       row0.insertAdjacentHTML(
         'afterbegin',
         `
@@ -412,7 +478,7 @@ function insertKeyboard(tag) {
                   `,
       );
     }
-    if (i == 1) {
+    if (i === 1) {
       row0.insertAdjacentHTML(
         'afterbegin',
         `
@@ -425,7 +491,7 @@ function insertKeyboard(tag) {
                   `,
       );
     }
-    if (i == 0) {
+    if (i === 0) {
       row0.insertAdjacentHTML(
         'afterbegin',
         `
@@ -440,34 +506,59 @@ function insertKeyboard(tag) {
     }
   }
 }
-
+/// Mouse click on keyboard
 function clickHandler(e) {
-  const exclude = ['Shift', 'Caps Lock', 'Ctrl', 'del', 'Tab', 'Alt', 'Backspace', 'Win', 'Enter'];
+  const exclude = ['Shift', 'Caps Lock', 'Ctrl', 'del', 'Tab', 'Alt', 'Backspace', 'Win', 'Enter', ''];
   const textarea = document.querySelector('#textarea');
   if (!exclude.includes(e.currentTarget.innerText)) {
-    textarea.value += e.currentTarget.innerText;
+    insertText(textarea, e.currentTarget.innerText);
+    e.currentTarget.classList.add('pushed');
+  }
+  if (e.currentTarget.innerText === 'Caps Lock') {
+    capsLockHandler();
+    e.currentTarget.classList.add('pushed');
+  }
+  if (e.currentTarget.innerText === '') {
+    insertText(textarea, ' ');
+    e.currentTarget.classList.add('pushed');
+  }
+  if (e.currentTarget.innerText === 'Tab') {
+    insertText(textarea, '    ');
+    e.currentTarget.classList.add('pushed');
+  }
+  if (e.currentTarget.innerText === 'Enter') {
+    insertText(textarea, '\n');
+    e.currentTarget.classList.add('pushed');
+  }
+  if (e.currentTarget.innerText === 'Backspace') {
+    backspaceKey(textarea);
+    e.currentTarget.classList.add('pushed');
+  }
+  if (e.currentTarget.innerText === 'del') {
+    deleteKey(textarea);
     e.currentTarget.classList.add('pushed');
   }
 }
 function clickHandlerUp(e) {
   e.currentTarget.classList.remove('pushed');
+  document.querySelector('#textarea').focus();
 }
 function getCapsLockStatus() {
   const ru = document.querySelectorAll('.ru');
   const en = document.querySelectorAll('.en');
   const ruCaps = document.querySelectorAll('.ruCaps');
   const enCaps = document.querySelectorAll('.enCaps');
-  if (capsLockStatus == 'true') {
-    if (lang == 'en') {
-      for (let i = 0; i < 64; i++) {
+  if (capsLockStatus === 'true') {
+    if (lang === 'en') {
+      for (let i = 0; i < 64; i += 1) {
         en[i].classList.add('disable');
         enCaps[i].classList.remove('disable');
         ru[i].classList.add('disable');
         ruCaps[i].classList.add('disable');
       }
     }
-    if (lang == 'ru') {
-      for (let i = 0; i < 64; i++) {
+    if (lang === 'ru') {
+      for (let i = 0; i < 64; i += 1) {
         ru[i].classList.add('disable');
         en[i].classList.add('disable');
         enCaps[i].classList.add('disable');
@@ -476,15 +567,15 @@ function getCapsLockStatus() {
     }
     document.querySelector('.CapsLock').classList.add('pushed');
   } else {
-    if (lang == 'en') {
-      for (let i = 0; i < 64; i++) {
+    if (lang === 'en') {
+      for (let i = 0; i < 64; i += 1) {
         ru[i].classList.add('disable');
         en[i].classList.remove('disable');
         enCaps[i].classList.add('disable');
       }
     }
-    if (lang == 'ru') {
-      for (let i = 0; i < 64; i++) {
+    if (lang === 'ru') {
+      for (let i = 0; i < 64; i += 1) {
         en[i].classList.add('disable');
         ru[i].classList.remove('disable');
         ruCaps[i].classList.add('disable');
@@ -495,7 +586,7 @@ function getCapsLockStatus() {
 }
 function addKeyHandlers() {
   const keys = document.querySelectorAll('.key');
-  for (let i = 0; i <= 64; i++) {
+  for (let i = 0; i <= 64; i += 1) {
     keys[i].addEventListener('mousedown', clickHandler);
     keys[i].addEventListener('mouseup', clickHandlerUp);
   }
@@ -520,11 +611,11 @@ document.addEventListener('keydown', (event) => {
   const enCaps = document.querySelectorAll('.enCaps');
   /// ///////Change Language
   if (event.shiftKey && event.altKey) {
-    lang = (lang != 'ru') ? 'ru' : 'en';
+    lang = (lang !== 'ru') ? 'ru' : 'en';
     localStorage.setItem('lang', lang);
-    if (lang != 'en') {
+    if (lang !== 'en') {
       for (let i = 0; i < 64; i += 1) {
-        if (localStorage.getItem('capsLockStatus') == 'false') {
+        if (localStorage.getItem('capsLockStatus') === 'false') {
           ru[i].classList.remove('disable');
           ruCaps[i].classList.add('disable');
           en[i].classList.add('disable');
@@ -538,7 +629,7 @@ document.addEventListener('keydown', (event) => {
       }
     } else {
       for (let i = 0; i < 64; i += 1) {
-        if (localStorage.getItem('capsLockStatus') == 'false') {
+        if (localStorage.getItem('capsLockStatus') === 'false') {
           en[i].classList.remove('disable');
           enCaps[i].classList.add('disable');
           ru[i].classList.add('disable');
@@ -554,6 +645,7 @@ document.addEventListener('keydown', (event) => {
   }
   if (!arr.includes(event.code)) {
     textarea.value += document.querySelector(`.${event.code}`).innerText;
+    // insertText(textarea,document.querySelector(`.${event.code}`).innerText)
   }
   if (event.code === 'Enter') {
     textarea.value += '\n';
@@ -561,44 +653,18 @@ document.addEventListener('keydown', (event) => {
   if (event.code === 'Tab') {
     textarea.value += '    ';
   }
-  if (event.code === 'Backspace' || event.code === 'Delete') {
-    textarea.value = textarea.value.slice(0, textarea.value.length - 1);
+  if (event.code === 'Space') {
+    textarea.value += ' ';
+  }
+  if (event.code === 'Backspace') {
+    backspaceKey(textarea);
+  }
+  if (event.code === 'Delete') {
+    deleteKey(textarea);
   }
   /// //////////CapsLock
   if (event.code === 'CapsLock') {
-    if (capsLockStatus !== 'true') {
-      localStorage.setItem('capsLockStatus', 'true');
-      capsLockStatus = 'true';
-      if (lang == 'en') {
-        for (let i = 0; i < 64; i++) {
-          en[i].classList.add('disable');
-          enCaps[i].classList.remove('disable');
-        }
-      }
-      if (lang == 'ru') {
-        for (let i = 0; i < 64; i++) {
-          ru[i].classList.add('disable');
-          ruCaps[i].classList.remove('disable');
-        }
-      }
-      document.querySelector(`.${event.code}`).classList.add('pushed');
-    } else {
-      if (lang == 'en') {
-        for (let i = 0; i < 64; i++) {
-          en[i].classList.remove('disable');
-          enCaps[i].classList.add('disable');
-        }
-      }
-      if (lang == 'ru') {
-        for (let i = 0; i < 64; i++) {
-          ru[i].classList.remove('disable');
-          ruCaps[i].classList.add('disable');
-        }
-      }
-      document.querySelector(`.${event.code}`).classList.remove('pushed');
-      capsLockStatus = 'false';
-      localStorage.setItem('capsLockStatus', 'false');
-    }
+    capsLockHandler();
   }
   try {
     if (event.code !== 'CapsLock') {
