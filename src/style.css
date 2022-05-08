@@ -76,33 +76,7 @@
   background-color: #444444;
 }
 
-.key .en, .key .enCaps {
-  position: absolute;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 40px;
-  height: 40px;
-  margin: 0;
-  padding: 0;
-  top: 0;
-  left: 0;
-  text-align: center;
-  color: white;
-  font-weight: 700;
-}
-
-.key .ru, .key .ruCaps {
+.key .ru, .key .ruCaps, .key .ruShift, .key .en, .key .enCaps, .key .enShift {
   position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -145,5 +119,10 @@
 .Space {
   width: 385px !important;
   height: 40px;
+}
+
+p {
+  padding: 0;
+  margin: 10px;
 }
 /*# sourceMappingURL=style.css.map */
