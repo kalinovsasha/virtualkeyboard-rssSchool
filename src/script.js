@@ -175,7 +175,7 @@ function insertKeyboard(tag) {
     'beforeend',
     `
 <p>Клавиатура создана в операционной системе Windows</p>
-<p>Для переключения языка комбинация: левыe shift + alt</p>
+<p>Для переключения языка комбинация: левыe ctrl + alt</p>
 `,
   );
   // Create rows 4-0
@@ -740,7 +740,7 @@ document.addEventListener('keydown', (event) => {
   const ruCaps = document.querySelectorAll('.ruCaps');
   const enCaps = document.querySelectorAll('.enCaps');
 ///////Change Language
-  if (event.shiftKey && event.altKey) {
+  if (event.altKey && event.ctrlKey) {
     lang = (lang !== 'ru') ? 'ru' : 'en';
     localStorage.setItem('lang', lang);
     if (lang !== 'en') {
