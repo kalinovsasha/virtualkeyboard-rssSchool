@@ -739,7 +739,7 @@ document.addEventListener('keydown', (event) => {
   const en = document.querySelectorAll('.en');
   const ruCaps = document.querySelectorAll('.ruCaps');
   const enCaps = document.querySelectorAll('.enCaps');
-///////Change Language
+///Change Language
   if (event.altKey && event.ctrlKey) {
     lang = (lang !== 'ru') ? 'ru' : 'en';
     localStorage.setItem('lang', lang);
