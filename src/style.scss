@@ -1,0 +1,81 @@
+*{
+    box-sizing: border-box;
+}
+.wrapper{
+    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+#textarea{
+    width: 780px;
+    height: 400px;
+    margin-bottom: 20px;
+}
+.pushed{
+    background-color: rgb(61, 99, 221) !important;
+    border-radius: 20px !important;
+    transition: .15s ease-in;
+}
+.keyboard{
+    width: 780px;
+    height: 251px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #888888;
+    border-radius: 10px;
+    border: 3px solid #222222;
+}
+.keyboard_rows{
+    width: 760px;
+    height: 40px;
+    margin: 4px 4px 4px 4px ;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+   // border:  1px solid red;
+}
+.key{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: #444444;
+    .ru, .ruCaps, .ruShift, .en, .enCaps, .enShift{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin:0;
+        padding: 0;
+        top:0;
+        left:0;
+        text-align: center;
+        color: white;
+        font-weight: 700;
+      }
+      .disable{
+        display: none !important;
+      }
+      &:hover{
+          background-color: rgb(126, 155, 248);
+          transition: 0.25s ease-out;
+      }
+}
+.longButton{
+    width: 80px !important;
+}
+.Space{
+    width: 385px !important;
+    height: 40px
+}
+p{
+    padding: 0;
+    margin: 10px;
+}

@@ -1,0 +1,128 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.wrapper {
+  width: 1200px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 auto;
+}
+
+#textarea {
+  width: 780px;
+  height: 400px;
+  margin-bottom: 20px;
+}
+
+.pushed {
+  background-color: #3d63dd !important;
+  border-radius: 20px !important;
+  -webkit-transition: .15s ease-in;
+  transition: .15s ease-in;
+}
+
+.keyboard {
+  width: 780px;
+  height: 251px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #888888;
+  border-radius: 10px;
+  border: 3px solid #222222;
+}
+
+.keyboard_rows {
+  width: 760px;
+  height: 40px;
+  margin: 4px 4px 4px 4px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.key {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: #444444;
+}
+
+.key .ru, .key .ruCaps, .key .ruShift, .key .en, .key .enCaps, .key .enShift {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  text-align: center;
+  color: white;
+  font-weight: 700;
+}
+
+.key .disable {
+  display: none !important;
+}
+
+.key:hover {
+  background-color: #7e9bf8;
+  -webkit-transition: 0.25s ease-out;
+  transition: 0.25s ease-out;
+}
+
+.longButton {
+  width: 80px !important;
+}
+
+.Space {
+  width: 385px !important;
+  height: 40px;
+}
+
+p {
+  padding: 0;
+  margin: 10px;
+}
+/*# sourceMappingURL=style.css.map */
